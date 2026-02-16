@@ -19,6 +19,8 @@ import Changelog from './pages/Changelog';
 import Legal from './pages/Legal';
 import AdminDashboard from './pages/AdminDashboard';
 
+const ADMIN_EMAIL = 'wahyudarizki91@gmail.com';
+
 const App: React.FC = () => {
   const [session, setSession] = useState<any>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -31,7 +33,7 @@ const App: React.FC = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session) {
-        fetchProfile(session.user.id);
+        fetchProfile(session.user.id, session.user.email);
         setIsViewingAuth(false);
         setIsGuestMode(false);
       }
@@ -40,7 +42,7 @@ const App: React.FC = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
-        fetchProfile(session.user.id);
+        fetchProfile(session.user.id, session.user.email);
         setIsViewingAuth(false);
         setIsGuestMode(false);
       } else {
@@ -75,29 +77,47 @@ const App: React.FC = () => {
     };
   }, [session]);
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = async (userId: string, email?: string) => {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', userId)
       .single();
 
+    const isAdmin = email === ADMIN_EMAIL;
+
     if (error && error.code === 'PGRST116') {
+      // New user creation
       const { data: newProfile } = await supabase
         .from('profiles')
         .insert([{ 
           id: userId, 
-          full_name: session?.user?.user_metadata?.full_name || 'New User', 
+          full_name: session?.user?.user_metadata?.full_name || (isAdmin ? 'NusaAI Creator' : 'New User'), 
           language_preference: 'en',
-          subscription_status: 'free',
-          credits_remaining: 1,
-          role: 'user'
+          subscription_status: isAdmin ? 'pro' : 'free',
+          credits_remaining: isAdmin ? 999999 : 1,
+          role: isAdmin ? 'admin' : 'user'
         }])
         .select()
         .single();
       setProfile(newProfile);
     } else {
-      setProfile(data);
+      // Jika profile sudah ada tapi role belum admin (untuk case Anda sekarang)
+      if (isAdmin && data && data.role !== 'admin') {
+        const { data: updatedProfile } = await supabase
+          .from('profiles')
+          .update({ 
+            role: 'admin', 
+            subscription_status: 'pro',
+            credits_remaining: 999999 
+          })
+          .eq('id', userId)
+          .select()
+          .single();
+        setProfile(updatedProfile);
+      } else {
+        setProfile(data);
+      }
       if (data?.language_preference) setLang(data.language_preference);
     }
   };
@@ -122,10 +142,8 @@ const App: React.FC = () => {
     }
   };
 
-  // Pengecekan apakah modul saat ini adalah halaman publik
   const isPublicModule = ['pricing', 'about', 'changelog', 'privacy', 'terms'].includes(currentModule);
 
-  // Jika belum login, bukan dalam mode guest, dan bukan halaman publik -> Tampilkan Landing
   if (!session && !isGuestMode && !isPublicModule) {
     if (isViewingAuth) {
       return (
@@ -155,7 +173,6 @@ const App: React.FC = () => {
     const triggerAuth = () => setIsViewingAuth(true);
     const triggerPricing = () => setCurrentModule('pricing');
 
-    // Protect Admin Module
     if (currentModule === 'admin' && profile?.role !== 'admin') {
       return <Dashboard lang={lang} navigateTo={handleNavigate} profile={profile} isGuest={!session} />;
     }
