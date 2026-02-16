@@ -1,0 +1,8 @@
+{
+  "name": "NusaAI Super-App",
+  "description": "A high-end AI SaaS platform offering creative studio tools, professional assistants, career optimization, health tracking, and agentic automation for global and Indonesian markets.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

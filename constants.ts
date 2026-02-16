@@ -1,0 +1,52 @@
+
+import { Translation } from './types';
+
+export const SUPABASE_URL = 'https://igqurdqabdeyxuebksua.supabase.co';
+export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlncXVyZHFhYmRleXh1ZWJrc3VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyMzgxNzAsImV4cCI6MjA4NjgxNDE3MH0.GmkHHCZ2uTorohJdI-NW9PSB4XxkAxxq-1vwX5MlLxg';
+
+export const TRANSLATIONS: Translation = {
+  dashboard: { en: 'Dashboard', id: 'Beranda' },
+  creative_studio: { en: 'Creative Studio', id: 'Studio Kreatif' },
+  professional_suite: { en: 'Professional Suite', id: 'Paket Profesional' },
+  career_center: { en: 'Career Center', id: 'Pusat Karir' },
+  health_hub: { en: 'Health Hub', id: 'Pusat Kesehatan' },
+  automation: { en: 'Automation', id: 'Otomasi' },
+  settings: { en: 'Settings', id: 'Pengaturan' },
+  admin_panel: { en: 'Admin Panel', id: 'Panel Admin' },
+  logout: { en: 'Logout', id: 'Keluar' },
+  login: { en: 'Login', id: 'Masuk' },
+  get_started: { en: 'Get Started', id: 'Mulai Sekarang' },
+  pricing: { en: 'Pricing', id: 'Harga' },
+  upgrade_pro: { en: 'Upgrade to Pro', id: 'Tingkatkan ke Pro' },
+  credits: { en: 'Credits', id: 'Kredit' },
+  unlimited: { en: 'Unlimited', id: 'Tanpa Batas' },
+  checkout_stripe: { en: 'Pay with Stripe (USD)', id: 'Bayar dengan Stripe (USD)' },
+  checkout_midtrans: { en: 'Pay with Midtrans (QRIS/Bank)', id: 'Bayar via Midtrans (QRIS/Bank)' },
+  admin_users: { en: 'User Management', id: 'Manajemen Pengguna' },
+  admin_revenue: { en: 'Revenue Tracker', id: 'Pelacak Pendapatan' },
+  admin_master_key: { en: 'Master API Key', id: 'Kunci API Master' },
+  save_success: { en: 'Settings saved!', id: 'Pengaturan disimpan!' },
+  recent_activity: { en: 'Recent Activity', id: 'Aktivitas Terbaru' },
+  welcome_back: { en: 'Welcome back', id: 'Selamat datang kembali' },
+  search_placeholder: { en: 'Search anything...', id: 'Cari apapun...' },
+  features: { en: 'Features', id: 'Fitur' },
+  about: { en: 'About Us', id: 'Tentang Kami' },
+  changelog: { en: 'Changelog', id: 'Catatan Rilis' },
+  privacy_policy: { en: 'Privacy Policy', id: 'Kebijakan Privasi' },
+  terms_of_service: { en: 'Terms of Service', id: 'Ketentuan Layanan' },
+  creative_desc: { en: 'Turn long-form videos into viral shorts and reels instantly.', id: 'Ubah video durasi panjang menjadi shorts dan reels viral seketika.' },
+  professional_desc: { en: 'Specialized AI for Legal, Architecture, and Business niches.', id: 'AI khusus untuk ceruk Hukum, Arsitektur, dan Bisnis.' },
+  automation_desc: { en: 'Agentic AI for seamless email and database automation.', id: 'AI Agensi untuk otomasi email dan basis data yang mulus.' },
+  health_desc: { en: 'Track nutrition and calories directly from your food photos.', id: 'Pantau nutrisi dan kalori langsung dari foto makanan Anda.' },
+  career_desc: { en: 'Optimize your resume for ATS and ace your interviews.', id: 'Optimalkan resume Anda untuk ATS dan kuasai wawancara Anda.' },
+  hero_title: { en: 'One AI App for Everything: Business, Career, and Lifestyle.', id: 'Satu Aplikasi AI untuk Segalanya: Bisnis, Karir, dan Gaya Hidup.' },
+  hero_subtitle: { en: 'Content automation, professional assistants, and health tracking in one hand with the power of Google Gemini AI.', id: 'Otomatisasi konten, asisten profesional, hingga pemantau kesehatan dalam satu genggaman dengan kekuatan Google Gemini AI.' },
+  try_free: { en: 'Try for Free Now', id: 'Coba Gratis Sekarang' },
+  save_settings: { en: 'Save Settings', id: 'Simpan Pengaturan' },
+  api_key_placeholder: { en: 'Enter your Gemini API Key', id: 'Masukkan Kunci API Gemini Anda' },
+  language: { en: 'Language', id: 'Bahasa' },
+  free_tier: { en: 'Free Trial', id: 'Uji Coba Gratis' },
+  pro_monthly: { en: 'Pro Monthly', id: 'Pro Bulanan' },
+  annual_plan: { en: 'Annual Plan', id: 'Paket Tahunan' },
+  paywall_upgrade: { en: 'Out of credits. Upgrade to Pro for unlimited access.', id: 'Kredit habis. Tingkatkan ke Pro untuk akses tanpa batas.' }
+};
