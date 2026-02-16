@@ -42,99 +42,99 @@ const Sidebar: React.FC<SidebarProps> = ({ currentModule, setCurrentModule, lang
   const credits = isGuest ? (localStorage.getItem('nusai_guest_trial_used') === 'true' ? 0 : 1) : (profile?.credits_remaining || 0);
 
   return (
-    <aside className="w-24 lg:w-72 glass border-r border-white/5 flex flex-col h-screen sticky top-0 z-50 backdrop-blur-2xl">
-      <div className="p-8 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-2xl nusa-gradient-bg flex items-center justify-center font-black text-2xl shadow-[0_0_20px_rgba(0,98,255,0.4)]">
+    <aside className="w-20 lg:w-64 glass border-r border-slate-200 flex flex-col h-screen sticky top-0 z-50">
+      <div className="p-6 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl nusa-gradient-bg flex items-center justify-center font-black text-xl text-white shadow-lg">
           N
         </div>
-        <span className="text-2xl font-black tracking-tighter text-white hidden lg:block">
-          NusaAI <span className="text-[#00F5FF]">Hub</span>
+        <span className="text-xl font-black tracking-tighter text-slate-900 hidden lg:block">
+          NusaAI <span className="text-blue-600">Hub</span>
         </span>
       </div>
 
-      <nav className="flex-1 px-4 space-y-2 mt-4">
+      <nav className="flex-1 px-3 space-y-1 mt-4">
         {menuItems.map((item) => (
           <button
             key={item.id}
             onClick={() => setCurrentModule(item.id as ModuleType)}
-            className={`w-full flex items-center gap-5 p-4 rounded-2xl transition-all duration-300 group ${
+            className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-300 group ${
               currentModule === item.id 
-                ? 'bg-gradient-to-r from-[#0062FF]/20 to-[#AD00FF]/5 text-white border border-white/10 shadow-[inset_0_0_20px_rgba(0,98,255,0.1)]' 
-                : 'text-slate-500 hover:bg-white/5 hover:text-slate-200'
+                ? 'bg-blue-600 text-white shadow-md' 
+                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'
             }`}
           >
-            <item.icon size={26} className={currentModule === item.id ? 'text-[#00F5FF] neon-text-cyan' : 'group-hover:scale-110 transition-transform'} />
-            <span className={`font-black text-lg hidden lg:block tracking-tight ${currentModule === item.id ? 'text-white' : ''}`}>
+            <item.icon size={22} className={currentModule === item.id ? 'text-white' : 'group-hover:scale-110 transition-transform'} />
+            <span className={`font-bold text-sm hidden lg:block tracking-tight ${currentModule === item.id ? 'text-white' : ''}`}>
               {item.label}
             </span>
           </button>
         ))}
 
         {isAdmin && (
-          <div className="pt-6 mt-6 border-t border-white/5">
+          <div className="pt-4 mt-4 border-t border-slate-200">
             <button
               onClick={() => setCurrentModule('admin')}
-              className={`w-full flex items-center gap-5 p-4 rounded-2xl transition-all duration-300 ${
+              className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-300 ${
                 currentModule === 'admin' 
-                  ? 'bg-[#FF00D6]/20 text-white border border-[#FF00D6]/30 shadow-[0_0_15px_rgba(255,0,214,0.1)]' 
-                  : 'text-[#FF00D6]/60 hover:bg-[#FF00D6]/10 hover:text-[#FF00D6]'
+                  ? 'bg-purple-600 text-white shadow-md' 
+                  : 'text-purple-600 hover:bg-purple-50'
               }`}
             >
-              <ShieldAlert size={26} />
-              <span className="font-black text-lg hidden lg:block tracking-tight">OPERATIONS</span>
+              <ShieldAlert size={22} />
+              <span className="font-bold text-sm hidden lg:block tracking-tight">OPERATIONS</span>
             </button>
           </div>
         )}
       </nav>
 
-      <div className="px-6 py-6 space-y-6">
-        <div className="hidden lg:block">
-          <div className="glass-card p-5 rounded-[2rem] border border-white/5 space-y-3 bg-[#05050A]/40">
-            <div className="flex justify-between items-center">
-              <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Neural Sync</span>
-              <span className={isPro ? "text-[#00F5FF] font-black" : "text-white font-black"}>
-                {isPro ? "MAXED" : `${credits} LEFT`}
-              </span>
-            </div>
-            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-               <div 
-                 className={`h-full nusa-gradient-bg shadow-[0_0_10px_rgba(0,98,255,0.5)]`}
-                 style={{ width: isPro ? '100%' : (credits > 0 ? '50%' : '0%') }}
-               />
+      <div className="px-4 py-6 space-y-4">
+        {!isPro && !isGuest && (
+          <div className="hidden lg:block">
+            <div className="glass-card p-4 rounded-2xl border border-slate-100 space-y-2 bg-white/40">
+              <div className="flex justify-between items-center">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Credits</span>
+                <span className="text-blue-600 font-bold text-xs">{credits} Left</span>
+              </div>
+              <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-blue-600"
+                  style={{ width: `${Math.min((credits / 100) * 100, 100)}%` }}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {isGuest ? (
-          <button onClick={onLoginClick} className="w-full flex items-center justify-center gap-3 p-4 bg-[#0062FF] text-white rounded-2xl hover:bg-[#0050D1] transition-all font-black shadow-[0_0_20px_rgba(0,98,255,0.4)]">
-            <LogIn size={20} />
-            <span className="text-base hidden lg:block tracking-tight">LINK INTERFACE</span>
+          <button onClick={onLoginClick} className="w-full flex items-center justify-center gap-2 p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-bold text-sm shadow-lg">
+            <LogIn size={18} />
+            <span className="hidden lg:block">Sign In</span>
           </button>
         ) : !isPro && (
-          <button onClick={() => setCurrentModule('pricing')} className="w-full flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-[#AD00FF]/10 to-[#FF00D6]/10 border border-[#AD00FF]/30 text-[#AD00FF] rounded-2xl hover:bg-[#AD00FF]/20 transition-all group font-black shadow-[0_0_15px_rgba(173,0,255,0.15)]">
-            <Crown size={20} className="group-hover:rotate-12 transition-transform" />
-            <span className="text-base hidden lg:block tracking-tight uppercase tracking-widest text-xs">Ascend Pro</span>
+          <button onClick={() => setCurrentModule('pricing')} className="w-full flex items-center justify-center gap-2 p-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:opacity-90 transition-all font-bold text-sm shadow-md">
+            <Crown size={18} />
+            <span className="hidden lg:block">Ascend Pro</span>
           </button>
         )}
       </div>
 
-      <div className="p-6 border-t border-white/5 space-y-2 bg-[#05050A]/20">
+      <div className="p-4 border-t border-slate-200 space-y-1">
         <button
           onClick={() => isGuest ? onLoginClick?.() : setCurrentModule('settings')}
-          className={`w-full flex items-center gap-5 p-4 rounded-2xl transition-all duration-300 ${
-            currentModule === 'settings' ? 'text-white' : 'text-slate-500 hover:bg-white/5 hover:text-slate-200'
+          className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all duration-300 ${
+            currentModule === 'settings' ? 'text-blue-600 bg-blue-50' : 'text-slate-500 hover:bg-slate-100'
           }`}
         >
-          <SettingsIcon size={24} />
-          <span className="font-bold text-base hidden lg:block tracking-tight">{TRANSLATIONS.settings[lang]}</span>
+          <SettingsIcon size={20} />
+          <span className="font-bold text-sm hidden lg:block">{TRANSLATIONS.settings[lang]}</span>
         </button>
         {!isGuest && (
           <button
             onClick={() => supabase.auth.signOut()}
-            className="w-full flex items-center gap-5 p-4 rounded-2xl text-slate-600 hover:bg-red-500/10 hover:text-red-400 transition-all duration-300"
+            className="w-full flex items-center gap-4 p-3 rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-600 transition-all duration-300"
           >
-            <LogOut size={24} />
-            <span className="font-bold text-base hidden lg:block tracking-tight">TERMINATE</span>
+            <LogOut size={20} />
+            <span className="font-bold text-sm hidden lg:block tracking-tight">Sign Out</span>
           </button>
         )}
       </div>
